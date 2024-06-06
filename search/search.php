@@ -237,7 +237,7 @@ function custom_ajax_product_search() {
     $collected_terms = ['product_cat' => [], 'product_tag' => [], 'brand' => [], 'search-tag' => []];
 
     foreach ($search_terms as $term) {
-        // error_log('Search Term: ' . $term);
+       
         foreach (['product_cat', 'product_tag', 'brand','search-tag'] as $taxonomy) {
             $args = [
                 'taxonomy' => $taxonomy,
@@ -264,7 +264,6 @@ function custom_ajax_product_search() {
         }
     }
 }
-    // error_log('Collected Terms: ' . print_r($collected_terms, true));
     foreach ($collected_terms as $taxonomy => $terms) {
         $collected_terms[$taxonomy] = array_slice(array_unique($terms, SORT_REGULAR), 0, 15);
     }
@@ -566,7 +565,6 @@ function custom_ajax_product_search() {
                    
                     $full_child_name =  '<span class="custom-search-items">' . $brand->name . '</span> ' . $child->name;
                 
-                    // Check if the child's full name contains the search term (case-insensitive)
                     if (stripos($full_child_name, $raw_search_term) !== false) {
                         $child_brand_data[] = [
                             'term_id' => $child->term_id,
@@ -580,7 +578,7 @@ function custom_ajax_product_search() {
                    
                 
                
-                break; // Stop the loop once a brand is found
+                break; 
             } else {
                 error_log("Skipping child brand found in search.");
             }
