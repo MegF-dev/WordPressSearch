@@ -28,7 +28,7 @@ jQuery(document).ready(function ($) {
     function performSearch(searchTerm) {
         console.log("Search Term: " + searchTerm);
 
-        var searchTerms = searchTerm.toLowerCase().split(" ");
+        var searchTerms = searchTerm.toLowerCase().split(" "); // Split into words for individual checking
         console.log(searchTerms);
         $.ajax({
             url: ajax_object.ajaxurl,
@@ -42,6 +42,15 @@ jQuery(document).ready(function ($) {
                 console.log(response);
                 var resultHtml = "";
 
+                // if (response.is_brand_search) {
+                //   // Hide categories and show brands
+                //   $(".search-list-categories").hide();
+                //   $(".search-list-brands").show();
+                // } else {
+                //   // Show categories and hide brands
+                //   $(".search-list-categories").show();
+                //   $(".search-list-brands").hide();
+                // }
                 var categories = response.categories || [];
                 var tags = response.tags || [];
                 var searchtags = response.search_tag || [];
@@ -67,6 +76,7 @@ jQuery(document).ready(function ($) {
                                         category.display_name +
                                         '">';
                                 } else {
+                                    // Display a placeholder image or a default category icon if no image is available
                                     resultHtml +=
                                         '<img src="path/to/placeholder-image.jpg" alt="' +
                                         category.display_name +
@@ -207,6 +217,7 @@ jQuery(document).ready(function ($) {
                                 feet: "foot",
                             };
 
+                            // Check if the word is an exception
                             if (exceptions[word]) {
                                 return exceptions[word];
                             }
@@ -271,7 +282,7 @@ jQuery(document).ready(function ($) {
                             }
                         }
                         filterList(searchTerm);
-
+                        // $(".search-list-categories li:nth-child(n+6)").hide();
                         $(".search-list-brands").hide();
                         $(".search-list-child-brands li:nth-child(n+6)").hide();
                     }
@@ -285,7 +296,7 @@ jQuery(document).ready(function ($) {
                         "' class='view-more-results'>View More Products</a>";
                 }
 
-                $("#custom-loader").hide();
+                $("#custom-loader").hide(); // Hide the loader when data is received
                 $("#custom-live-search-results").html(resultHtml).show();
             },
             error: function (xhr, status, error) {
